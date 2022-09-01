@@ -2,7 +2,7 @@
 #Aug 31 2022
 
 #Setup: 
-setwd('<path to your chosen working directory>')
+setwd('/home/arno/nemar/trance_bids_2021/connectivity')
 
 
 library(R.matlab)
@@ -52,10 +52,11 @@ bands_DATA$trial <- as.factor(bands_DATA$trial)
 bands_DATA$condition <- as.factor(bands_DATA$condition)
 bands_DATA$band <- as.factor(bands_DATA$band)
 
+options(bitmapType='cairo')
 
 #Run models within band
 #Updated Aug 16 2022: shifting area from numeric to xyz
-model_delta <- bam(log(power) ~ condition + te(area_x, area_y, area_z, bs = "tp", by = condition, m = 2, k = c(35, 35, 35)) + s(subject, bs = "re") + s(session, bs = "re") + s(trial, bs = "re"), 
+model_delta <- bam(log(power) ~ condition + te(area_x, area_y, area_z, bs = "tp", by = condition, m = 2, k = c(15, 15, 15)) + s(subject, bs = "re") + s(session, bs = "re") + s(trial, bs = "re"), 
                    data = bands_DATA %>% filter(band == "delta"))
 # model_theta <- bam(log(power) ~ condition + te(area_x, area_y, area_z, bs = "tp", by = condition, m = 2, k = c(40, 40, 40)) + s(subject, bs = "re") + s(session, bs = "re") + s(trial, bs = "re"), 
 #                    data = bands_DATA %>% filter(band == "theta"))
@@ -73,7 +74,7 @@ model_delta <- bam(log(power) ~ condition + te(area_x, area_y, area_z, bs = "tp"
 
 # DELTA BAND
 summary(model_delta)
-jpeg('DELTA_RESIDUAL_PLOT.jpg')
+#png("DELTA_RESIDUAL_PLOT.png") 
 par(mfrow=c(2,2))
 gam.check(model_delta)
 dev.off()
@@ -198,14 +199,14 @@ save(model_delta, file="model_delta.Rdata")
 #   ggtitle("Theta smooth differences (log scale)")
 # dev.off()
 
-png('Delta diff plot.png', width=400, height=450)
-ggplot(delta_pairwise_table, aes(x = area, y = diff, col = diff)) + 
-  theme_bw() + 
-  geom_point() +
-  facet_wrap(~ pair, ncol = 2) +
+#png('Delta diff plot.png', width=400, height=450)
+#ggplot(delta_pairwise_table, aes(x = area, y = diff, col = diff)) + 
+#  theme_bw() + 
+#  geom_point() +
+#  facet_wrap(~ pair, ncol = 2) +
   # coord_cartesian(ylim = diff_ylim) +
-  ggtitle("Delta smooth differences (log scale)")
-dev.off()
+#  ggtitle("Delta smooth differences (log scale)")
+#dev.off()
 
 # png('Beta diff plot.png', width=400, height=450)
 # ggplot(beta_pairwise_table, aes(x = area, y = diff, col = diff)) + 
