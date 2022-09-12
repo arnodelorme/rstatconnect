@@ -58,19 +58,23 @@ options(bitmapType='cairo')
 #Updated Aug 16 2022: shifting area from numeric to xyz
 model_delta <- bam(log(power) ~ condition + te(area_x, area_y, area_z, bs = "tp", by = condition, m = 2, k = c(15, 15, 15)) + s(subject, bs = "re") + s(session, bs = "re") + s(trial, bs = "re"), 
                    data = bands_DATA %>% filter(band == "delta"))
-# model_theta <- bam(log(power) ~ condition + te(area_x, area_y, area_z, bs = "tp", by = condition, m = 2, k = c(40, 40, 40)) + s(subject, bs = "re") + s(session, bs = "re") + s(trial, bs = "re"), 
-#                    data = bands_DATA %>% filter(band == "theta"))
-# model_alpha <- bam(log(power) ~ condition + te(area_x, area_y, area_z, bs = "tp", by = condition, m = 2, k = c(40, 40, 40)) + s(subject, bs = "re") + s(session, bs = "re") + s(trial, bs = "re"), 
-#                    data = bands_DATA %>% filter(band == "alpha"))
-# model_beta <- bam(log(power) ~ condition + te(area_x, area_y, area_z, bs = "tp", by = condition, m = 2, k = c(40, 40, 40)) + s(subject, bs = "re") + s(session, bs = "re") + s(trial, bs = "re"), 
-#                   data = bands_DATA %>% filter(band == "beta"))
-# model_gamma <- bam(log(power) ~ condition + te(area_x, area_y, area_z, bs = "tp", by = condition, m = 2, k = c(40, 40, 40)) + s(subject, bs = "re") + s(session, bs = "re") + s(trial, bs = "re"), 
-#                    data = bands_DATA %>% filter(band == "gamma"))
+model_theta <- bam(log(power) ~ condition + te(area_x, area_y, area_z, bs = "tp", by = condition, m = 2, k = c(15, 15, 15)) + s(subject, bs = "re") + s(session, bs = "re") + s(trial, bs = "re"), 
+                   data = bands_DATA %>% filter(band == "theta"))
+model_alpha <- bam(log(power) ~ condition + te(area_x, area_y, area_z, bs = "tp", by = condition, m = 2, k = c(15, 15, 15)) + s(subject, bs = "re") + s(session, bs = "re") + s(trial, bs = "re"), 
+                   data = bands_DATA %>% filter(band == "alpha"))
+model_beta <- bam(log(power) ~ condition + te(area_x, area_y, area_z, bs = "tp", by = condition, m = 2, k = c(15, 15, 15)) + s(subject, bs = "re") + s(session, bs = "re") + s(trial, bs = "re"), 
+                  data = bands_DATA %>% filter(band == "beta"))
+model_gamma <- bam(log(power) ~ condition + te(area_x, area_y, area_z, bs = "tp", by = condition, m = 2, k = c(15, 15, 15)) + s(subject, bs = "re") + s(session, bs = "re") + s(trial, bs = "re"), 
+                   data = bands_DATA %>% filter(band == "gamma"))
 
 
 # Arno, if you want to print results into another folder, create that folder, and reassign the working direction. 
 # setwd('<path to new working directory>')
-
+save(model_delta, file = "model_delta.rda")
+save(model_theta, file = "model_theta.rda")
+save(model_alpha, file = "model_alpha.rda")
+save(model_beta , file = "model_beta.rda")
+save(model_gamma, file = "model_gamma.rda")
 
 # DELTA BAND
 summary(model_delta)
