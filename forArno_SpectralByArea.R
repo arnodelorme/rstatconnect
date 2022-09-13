@@ -16,12 +16,14 @@ source("utils.R")
 
 
 # Load data
-DATA <- read.csv('trance_area_power_fixed.csv')
+DATA <- read.csv('trance_channel_power_fixed.csv')
+# DATA <- read.csv('trance_area_power_fixed.csv')
 
 
 #Update: Aug 16 2022
 # Switch area number for xyz coordinates
-xyz <- read.csv('area_coordinates.csv', header = F, col.names = c('area_x', 'area_y', 'area_z'))
+# xyz <- read.csv('area_coordinates.csv', header = F, col.names = c('area_x', 'area_y', 'area_z'))
+xyz <- read.csv('elec_coordinates.csv', row.names = 1, col.names = c('area_x', 'area_y', 'area_z'))
 
 DATA$area_x <- xyz$area_x[DATA$area]
 DATA$area_y <- xyz$area_y[DATA$area]
